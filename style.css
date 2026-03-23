@@ -1725,8 +1725,14 @@ thead th.sort-asc::after {
 
     /* Season tracker must not overflow */
     #season-tracker {
+        position: fixed !important;
+        inset: 0 !important;
         max-width: 100vw;
         overflow-x: hidden;
+        overflow-y: auto;
+        z-index: 100;
+        padding: 12px !important;
+        background: #1e2a3a !important;
     }
 
     /* All tables on mobile: readable with scroll */
@@ -1829,14 +1835,61 @@ thead th.sort-asc::after {
         font-size: 1.1rem;
     }
 
-    /* Optimal lineup */
+    /* Optimal lineup on mobile */
     #optimal-method-info {
         font-size: 0.72rem;
         padding: 8px 10px;
     }
 
+    #optimal-method-info p {
+        font-size: 0.7rem;
+        line-height: 1.3;
+    }
+
+    #optimal-lineup-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        max-width: calc(100vw - 24px);
+    }
+
+    /* Show only key columns on mobile, hide less important ones */
+    #optimal-lineup-table th:nth-child(6),
+    #optimal-lineup-table td:nth-child(6),
+    #optimal-lineup-table th:nth-child(8),
+    #optimal-lineup-table td:nth-child(8),
+    #optimal-lineup-table th:nth-child(9),
+    #optimal-lineup-table td:nth-child(9),
+    #optimal-lineup-table th:nth-child(10),
+    #optimal-lineup-table td:nth-child(10),
+    #optimal-lineup-table th:nth-child(13),
+    #optimal-lineup-table td:nth-child(13) {
+        display: none;
+    }
+
+    #optimal-lineup-table th,
+    #optimal-lineup-table td {
+        padding: 5px 6px;
+        font-size: 0.8rem;
+    }
+
+    /* Make player name column sticky */
+    #optimal-lineup-table td:nth-child(2) {
+        position: sticky;
+        left: 0;
+        z-index: 2;
+    }
+
+    #optimal-excerpt {
+        padding: 10px 12px;
+    }
+
+    #optimal-excerpt h4 {
+        font-size: 0.85rem;
+    }
+
     #optimal-excerpt p {
         font-size: 0.72rem;
+        line-height: 1.4;
     }
 
     /* Lineup filters */
