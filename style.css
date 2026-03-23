@@ -1573,10 +1573,17 @@ thead th.sort-asc::after {
 /* Print Styles */
 /* ========== MOBILE RESPONSIVE ========== */
 @media screen and (max-width: 900px) {
+    /* Prevent page from being wider than screen */
+    html, body {
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+
     /* Stack layout vertically */
     main {
         flex-direction: column;
         height: auto;
+        overflow-x: hidden;
     }
 
     /* Sidebar becomes top bar */
@@ -1587,6 +1594,7 @@ thead th.sort-asc::after {
         border-right: none;
         border-bottom: 1px solid #2a2a4a;
         padding: 12px;
+        overflow-x: hidden;
     }
 
     /* Collapse sidebar sections */
@@ -1664,58 +1672,117 @@ thead th.sort-asc::after {
         font-size: 0.75rem;
     }
 
-    /* Tables — horizontal scroll */
+    /* Tables — horizontal scroll within container */
     #batting-grid-wrap,
     #fielding-grid-wrap,
-    .stats-table-wrap {
+    .stats-table-wrap,
+    #optimal-lineup-wrap,
+    #compare-tables {
         overflow-x: auto;
         -webkit-overflow-scrolling: touch;
+        max-width: calc(100vw - 24px);
     }
 
-    /* Batting grid compact */
+    /* All tables: let them overflow their container and scroll */
+    table {
+        min-width: unset;
+    }
+
+    /* Editor must not overflow */
+    #lineup-editor {
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+
+    #editor-content {
+        max-width: 100%;
+        overflow-x: hidden;
+    }
+
+    /* Season tracker must not overflow */
+    #season-tracker {
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+
+    /* All tables on mobile: readable with scroll */
     #batting-grid th,
-    #batting-grid td {
-        padding: 4px 5px;
-        font-size: 0.75rem;
+    #batting-grid td,
+    #fielding-grid th,
+    #fielding-grid td,
+    #batting-stats-table th, #batting-stats-table td,
+    #fielding-stats-table th, #fielding-stats-table td,
+    #pitching-stats-table th, #pitching-stats-table td,
+    #season-innings-table th, #season-innings-table td,
+    #season-batting-table th, #season-batting-table td,
+    #season-fielding-table th, #season-fielding-table td,
+    #season-pitching-table th, #season-pitching-table td,
+    #season-lineup-table th, #season-lineup-table td,
+    #optimal-lineup-table th, #optimal-lineup-table td {
+        padding: 6px 8px;
+        font-size: 0.85rem;
+        white-space: nowrap;
     }
 
+    /* Player name column stays readable */
     #batting-grid .pos-col {
-        min-width: 100px;
+        min-width: 110px;
         width: auto;
+        position: sticky;
+        left: 0;
+        z-index: 2;
     }
 
     #batting-grid .stat-col {
-        min-width: 35px;
-        width: 35px;
-        font-size: 0.7rem;
+        min-width: 42px;
+        width: 42px;
+        font-size: 0.8rem;
     }
 
     #batting-grid .spacer-col {
-        width: 4px !important;
-        min-width: 4px !important;
-        max-width: 4px !important;
+        width: 6px !important;
+        min-width: 6px !important;
+        max-width: 6px !important;
     }
 
-    /* Fielding grid compact */
-    #fielding-grid th,
-    #fielding-grid td {
-        padding: 4px 5px;
-        font-size: 0.75rem;
+    /* Fielding grid: sticky position column */
+    #fielding-grid .pos-col {
+        position: sticky;
+        left: 0;
+        z-index: 2;
     }
 
-    /* Stats tables compact */
-    #batting-stats-table th, #batting-stats-table td,
-    #fielding-stats-table th, #fielding-stats-table td,
-    #pitching-stats-table th, #pitching-stats-table td {
-        padding: 4px 5px;
-        font-size: 0.75rem;
-    }
-
+    /* Inputs on mobile */
     #batting-stats-table input,
     #fielding-stats-table input,
     #pitching-stats-table input {
-        width: 38px;
-        font-size: 0.75rem;
+        width: 44px;
+        font-size: 0.85rem;
+        padding: 4px;
+    }
+
+    /* Season tracker tables: first column sticky */
+    #season-innings-table td:first-child,
+    #season-batting-table td:first-child,
+    #season-fielding-table td:first-child,
+    #season-pitching-table td:first-child,
+    #season-lineup-table td:first-child,
+    #optimal-lineup-table td:nth-child(2) {
+        position: sticky;
+        left: 0;
+        z-index: 2;
+        background: #1a1a2e;
+    }
+
+    #season-innings-table thead th:first-child,
+    #season-batting-table thead th:first-child,
+    #season-fielding-table thead th:first-child,
+    #season-pitching-table thead th:first-child,
+    #season-lineup-table thead th:first-child,
+    #optimal-lineup-table thead th:nth-child(2) {
+        position: sticky;
+        left: 0;
+        z-index: 3;
     }
 
     /* Filter compact */
@@ -1757,6 +1824,12 @@ thead th.sort-asc::after {
     .player-filter-btn {
         padding: 3px 8px;
         font-size: 0.72rem;
+    }
+
+    /* Game header actions */
+    #game-header-actions {
+        flex-wrap: wrap;
+        gap: 6px;
     }
 
     /* Copy game dropdown */
