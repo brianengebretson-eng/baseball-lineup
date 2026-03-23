@@ -3465,20 +3465,41 @@ document.getElementById('import-data-file').addEventListener('change', function(
 });
 
 // --- Mobile toggle ---
+const mobileSidebarToggle = document.getElementById('mobile-sidebar-toggle');
 const mobileMoreBtn = document.getElementById('mobile-more-btn');
+
 function checkMobile() {
-    if (window.innerWidth <= 900) {
-        mobileMoreBtn.style.display = 'block';
-    } else {
-        mobileMoreBtn.style.display = 'none';
+    const isMobile = window.innerWidth <= 900;
+    mobileSidebarToggle.style.display = isMobile ? 'block' : 'none';
+    if (mobileMoreBtn) mobileMoreBtn.style.display = 'none'; // hidden by default, shown when expanded
+    if (!isMobile) {
         document.getElementById('game-list').classList.remove('expanded');
     }
 }
-mobileMoreBtn.addEventListener('click', () => {
+
+mobileSidebarToggle.addEventListener('click', () => {
     const sidebar = document.getElementById('game-list');
     sidebar.classList.toggle('expanded');
-    mobileMoreBtn.textContent = sidebar.classList.contains('expanded') ? 'Less Options ▲' : 'More Options ▼';
+    mobileSidebarToggle.textContent = sidebar.classList.contains('expanded')
+        ? 'Close ▲' : 'Games & Settings ▼';
+    if (mobileMoreBtn) mobileMoreBtn.style.display = sidebar.classList.contains('expanded') ? 'block' : 'none';
 });
+
+if (mobileMoreBtn) {
+    mobileMoreBtn.addEventListener('click', () => {
+        const sidebar = document.getElementById('game-list');
+        const isShowingMore = mobileMoreBtn.textContent.includes('More');
+        // Toggle the extra sections visibility via a class
+        if (isShowingMore) {
+            document.querySelectorAll('#roster-section, #import-season-section, #data-sync-section').forEach(el => el.style.display = 'block');
+            mobileMoreBtn.textContent = 'Less Options ▲';
+        } else {
+            document.querySelectorAll('#roster-section, #import-season-section, #data-sync-section').forEach(el => el.style.display = 'none');
+            mobileMoreBtn.textContent = 'More Options ▼';
+        }
+    });
+}
+
 window.addEventListener('resize', checkMobile);
 checkMobile();
 

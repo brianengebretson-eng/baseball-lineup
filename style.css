@@ -1586,7 +1586,7 @@ thead th.sort-asc::after {
         overflow-x: hidden;
     }
 
-    /* Sidebar becomes top bar */
+    /* Sidebar collapses on mobile */
     #game-list {
         width: 100%;
         min-width: unset;
@@ -1597,30 +1597,54 @@ thead th.sort-asc::after {
         overflow-x: hidden;
     }
 
-    /* Collapse sidebar sections */
+    /* Hide everything in sidebar by default on mobile */
+    #game-list > h2,
+    #game-list > #add-game-form,
+    #game-list > #games,
+    #game-list > #mobile-more-btn,
     #roster-section,
     #import-season-section,
     #data-sync-section {
         display: none;
     }
 
-    /* Show toggle to expand sidebar sections */
+    /* Show when expanded */
+    #game-list.expanded > h2,
+    #game-list.expanded > #add-game-form,
+    #game-list.expanded > #games,
+    #game-list.expanded > #mobile-more-btn,
     #game-list.expanded #roster-section,
     #game-list.expanded #import-season-section,
     #game-list.expanded #data-sync-section {
         display: block;
     }
 
-    #games {
+    #game-list.expanded > #games {
         display: flex;
         flex-wrap: wrap;
         gap: 4px;
         margin-bottom: 10px;
     }
 
-    #games li {
+    #game-list.expanded > #games li {
         padding: 6px 10px;
         font-size: 0.78rem;
+    }
+
+    /* Always show the toggle button */
+    #mobile-sidebar-toggle {
+        display: block !important;
+        width: 100%;
+        padding: 10px;
+        background: #16213e;
+        color: #c4393a;
+        border: 1px solid #2a2a4a;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 0.9rem;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
 
     /* Header */
