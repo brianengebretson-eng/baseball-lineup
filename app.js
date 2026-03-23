@@ -27,25 +27,29 @@ function saveData(d) {
 let data = loadData();
 let activeGameId = null;
 
-// On startup, try to load from Firebase (cloud data wins if newer)
+// On startup, sync with Firebase
 if (window.firebaseDB) {
     window.firebaseDB.ref('lineupData').once('value').then(snapshot => {
         const cloudData = snapshot.val();
-        if (cloudData && cloudData.games && cloudData.games.length > 0) {
-            const localGames = data.games ? data.games.length : 0;
-            const cloudGames = cloudData.games.length;
-            // Use cloud data if it has more games or local is empty
-            if (cloudGames >= localGames || localGames === 0) {
-                data = cloudData;
-                if (!data.nameMap) data.nameMap = {};
-                localStorage.setItem('baseballLineup', JSON.stringify(data));
-                renderRoster();
-                renderGames();
-                console.log('Loaded data from Firebase (' + cloudGames + ' games)');
-            }
+        const localGames = data.games ? data.games.length : 0;
+        const cloudGames = (cloudData && cloudData.games) ? cloudData.games.length : 0;
+
+        if (cloudGames > localGames) {
+            // Cloud has more data — download it
+            data = cloudData;
+            if (!data.nameMap) data.nameMap = {};
+            localStorage.setItem('baseballLineup', JSON.stringify(data));
+            renderRoster();
+            renderGames();
+            console.log('Downloaded from Firebase (' + cloudGames + ' games)');
+        } else if (localGames > 0 && localGames > cloudGames) {
+            // Local has more data — push it up to Firebase
+            window.firebaseDB.ref('lineupData').set(data).then(() => {
+                console.log('Uploaded to Firebase (' + localGames + ' games)');
+            }).catch(err => console.warn('Firebase upload failed:', err.message));
         }
     }).catch(err => {
-        console.warn('Firebase load failed:', err.message);
+        console.warn('Firebase sync failed:', err.message);
     });
 }
 
