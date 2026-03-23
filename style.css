@@ -1,0 +1,2024 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    min-height: 100vh;
+}
+
+header {
+    background: #16213e;
+    padding: 16px 24px;
+    border-bottom: 3px solid #c4393a;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    font-size: 1.4rem;
+    color: #fff;
+    letter-spacing: 1px;
+}
+
+#header-actions {
+    display: flex;
+    gap: 8px;
+}
+
+#header-actions button {
+    padding: 6px 14px;
+    border-radius: 4px;
+    border: 1px solid #2a2a4a;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+#print-btn {
+    background: #2a6e4e !important;
+    color: #fff !important;
+    border-color: #2a6e4e !important;
+}
+
+#season-tracker-btn {
+    background: #3a5eab !important;
+    color: #fff !important;
+    border-color: #3a5eab !important;
+}
+
+#header-actions button:hover {
+    opacity: 0.85;
+}
+
+main {
+    display: flex;
+    height: calc(100vh - 60px);
+}
+
+/* Sidebar */
+#game-list {
+    width: 260px;
+    min-width: 260px;
+    background: #16213e;
+    padding: 16px;
+    overflow-y: auto;
+    border-right: 1px solid #2a2a4a;
+    display: flex;
+    flex-direction: column;
+}
+
+#game-list h2 {
+    font-size: 1rem;
+    margin-bottom: 12px;
+    color: #c4393a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#add-game-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+#add-game-form input,
+#add-game-form select,
+#add-game-form button {
+    padding: 8px;
+    border-radius: 4px;
+    border: 1px solid #2a2a4a;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    font-size: 0.85rem;
+}
+
+#add-game-form button {
+    background: #c4393a;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+#add-game-form button:hover {
+    background: #d94445;
+}
+
+#games {
+    list-style: none;
+    margin-bottom: 20px;
+}
+
+#games li {
+    padding: 10px 12px;
+    margin-bottom: 4px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.15s;
+    border-left: 3px solid transparent;
+}
+
+#games li:hover {
+    background: #1a1a2e;
+}
+
+#games li.active {
+    background: #1a1a2e;
+    border-left-color: #c4393a;
+}
+
+#games li .game-date {
+    font-weight: 600;
+    color: #fff;
+}
+
+#games li .game-opp {
+    color: #aaa;
+    margin-left: 6px;
+}
+
+/* Import Season Section */
+#import-season-section {
+    border-top: 1px solid #2a2a4a;
+    padding-top: 12px;
+    margin-bottom: 12px;
+}
+
+#import-season-section h2 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: #c4393a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#import-season-label {
+    width: 100%;
+    padding: 6px 8px;
+    border-radius: 4px;
+    border: 1px solid #2a2a4a;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    font-size: 0.85rem;
+}
+
+#season-csv-status {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.8rem;
+}
+
+/* Data Sync Section */
+#data-sync-section {
+    border-top: 1px solid #2a2a4a;
+    padding-top: 12px;
+    margin-bottom: 12px;
+}
+
+#data-sync-section h2 {
+    font-size: 1rem;
+    margin-bottom: 8px;
+    color: #c4393a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+#export-data-btn {
+    width: 100%;
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: #3a5eab;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+#export-data-btn:hover { background: #4a6ebb; }
+
+#sync-status {
+    display: block;
+    margin-top: 6px;
+    font-size: 0.78rem;
+}
+
+/* Roster Section */
+#roster-section {
+    margin-top: auto;
+    border-top: 1px solid #2a2a4a;
+    padding-top: 16px;
+}
+
+#add-player-form {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+}
+
+#add-player-form input {
+    flex: 1;
+    padding: 6px 8px;
+    border-radius: 4px;
+    border: 1px solid #2a2a4a;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    font-size: 0.85rem;
+}
+
+#add-player-form button {
+    padding: 6px 12px;
+    border-radius: 4px;
+    background: #2a6e4e;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+#roster-list {
+    list-style: none;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#roster-list li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 4px 8px;
+    font-size: 0.85rem;
+    border-radius: 3px;
+}
+
+#roster-list li:hover {
+    background: #1a1a2e;
+}
+
+#roster-list li button {
+    background: none;
+    border: none;
+    color: #c4393a;
+    cursor: pointer;
+    font-size: 0.75rem;
+    opacity: 0;
+    transition: opacity 0.15s;
+}
+
+#roster-list li:hover button {
+    opacity: 1;
+}
+
+/* Editor */
+#lineup-editor {
+    flex: 1;
+    padding: 24px;
+    overflow: auto;
+    position: relative;
+}
+
+#no-game-selected {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #666;
+    font-size: 1.1rem;
+}
+
+.hidden {
+    display: none !important;
+}
+
+#game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#editor-title {
+    font-size: 1.3rem;
+    color: #fff;
+}
+
+#game-header-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+#delete-game-btn {
+    padding: 6px 14px;
+    background: #4a1a1a;
+    color: #c4393a;
+    border: 1px solid #c4393a;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+#delete-game-btn:hover {
+    background: #c4393a;
+    color: #fff;
+}
+
+/* Copy Game Dropdown */
+#copy-game-wrap {
+    position: relative;
+}
+
+#copy-game-btn {
+    padding: 6px 14px;
+    background: #1a3a5c;
+    color: #7bb8e8;
+    border: 1px solid #3a5eab;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    font-weight: 600;
+}
+
+#copy-game-btn:hover {
+    background: #3a5eab;
+    color: #fff;
+}
+
+#copy-game-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: #16213e;
+    border: 1px solid #3a5eab;
+    border-radius: 4px;
+    margin-top: 4px;
+    z-index: 20;
+    min-width: 220px;
+    max-height: 300px;
+    overflow-y: auto;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
+
+#copy-game-list {
+    list-style: none;
+}
+
+#copy-game-list li {
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    border-bottom: 1px solid #2a2a4a;
+    transition: background 0.1s;
+}
+
+#copy-game-list li:last-child {
+    border-bottom: none;
+}
+
+#copy-game-list li:hover {
+    background: #1a1a2e;
+}
+
+#copy-game-list li .copy-date {
+    font-weight: 600;
+    color: #fff;
+}
+
+#copy-game-list li .copy-opp {
+    color: #aaa;
+    margin-left: 6px;
+}
+
+#copy-game-list .copy-empty {
+    color: #666;
+    cursor: default;
+    text-align: center;
+    font-style: italic;
+}
+
+/* Tabs */
+.tabs, .stats-sub-tabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 16px;
+}
+
+.tab, .stats-sub-tab, .season-sub-tab {
+    padding: 8px 20px;
+    background: #16213e;
+    color: #aaa;
+    border: 1px solid #2a2a4a;
+    border-bottom: none;
+    border-radius: 6px 6px 0 0;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.tab.active, .stats-sub-tab.active, .season-sub-tab.active {
+    background: #1a1a2e;
+    color: #fff;
+    border-color: #c4393a;
+    border-bottom: 2px solid #1a1a2e;
+}
+
+.tab:hover:not(.active), .stats-sub-tab:hover:not(.active), .season-sub-tab:hover:not(.active) {
+    color: #ddd;
+}
+
+.tab-content, .stats-tab-content, .season-tab-content {
+    display: none;
+}
+
+.tab-content.active, .stats-tab-content.active, .season-tab-content.active {
+    display: block;
+}
+
+/* Batting Grid */
+#batting-grid-wrap {
+    overflow-x: auto;
+    margin-bottom: 28px;
+}
+
+#batting-grid {
+    border-collapse: collapse;
+    width: auto;
+    min-width: 300px;
+}
+
+#batting-grid th,
+#batting-grid td {
+    padding: 6px 8px;
+    text-align: center;
+    border: 1px solid #2a2a4a;
+    font-size: 0.85rem;
+}
+
+#batting-grid thead th {
+    background: #16213e;
+    color: #c4393a;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#batting-grid .pos-col {
+    text-align: left;
+    width: 180px;
+    min-width: 180px;
+    font-weight: 700;
+    background: #16213e;
+    color: #fff;
+}
+
+#batting-grid .order-num {
+    width: 30px;
+    min-width: 30px;
+    text-align: center;
+    font-weight: 700;
+    color: #c4393a;
+    background: #16213e;
+}
+
+#batting-grid tbody td.order-num {
+    background: #16213e;
+}
+
+#batting-grid .player-select {
+    width: 100%;
+    padding: 5px 8px;
+    border: none;
+    background: transparent;
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    appearance: none;
+    text-align: left;
+}
+
+#batting-grid tbody td.pos-col {
+    background: #16213e;
+    padding: 0;
+    transition: background-color 0.15s;
+}
+
+#batting-grid .player-select:focus {
+    outline: 2px solid #c4393a;
+    outline-offset: -2px;
+}
+
+#batting-grid tbody tr .remove-batter {
+    background: none;
+    border: none;
+    color: #c4393a;
+    cursor: pointer;
+    font-size: 1rem;
+    opacity: 0.7;
+    padding: 2px 8px;
+    font-weight: 700;
+}
+
+#batting-grid tbody tr:hover .remove-batter {
+    opacity: 1;
+}
+
+#batting-grid .stat-col {
+    width: 50px;
+    min-width: 50px;
+    text-align: center;
+    font-size: 0.8rem;
+    color: #aaa;
+}
+
+#batting-grid tbody td.stat-col {
+    background: #1a1a2e;
+    color: #ccc;
+    font-weight: 600;
+    font-family: monospace;
+}
+
+#batting-grid thead th.stat-col {
+    background: #16213e;
+    color: #c4393a;
+    font-weight: 700;
+}
+
+#batting-grid .stat-low {
+    background: #4a1a1a !important;
+    color: #ff8a8a !important;
+}
+
+#batting-grid .stat-high {
+    background: #1a3a1a !important;
+    color: #8aff8a !important;
+}
+
+#batting-grid .stat-top30 {
+    background: #1a3a1a !important;
+    color: #8aff8a !important;
+}
+
+#batting-grid .spacer-col {
+    width: 8px !important;
+    min-width: 8px !important;
+    max-width: 8px !important;
+    padding: 0 !important;
+    background: #16213e !important;
+}
+
+#add-batting-row {
+    margin-top: 8px;
+    padding: 6px 16px;
+    background: #2a6e4e;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+#add-batting-row:hover {
+    background: #35896a;
+}
+
+/* Fielding Grid */
+#fielding-grid-wrap {
+    overflow-x: auto;
+    margin-bottom: 28px;
+}
+
+#fielding-grid {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 500px;
+}
+
+#fielding-grid th,
+#fielding-grid td {
+    padding: 6px 8px;
+    text-align: center;
+    border: 1px solid #2a2a4a;
+    font-size: 0.85rem;
+    transition: background-color 0.15s;
+}
+
+#fielding-grid thead th {
+    background: #16213e;
+    color: #c4393a;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    position: sticky;
+    top: 0;
+}
+
+#fielding-grid .pos-col {
+    text-align: left;
+    width: 90px;
+    min-width: 90px;
+    font-weight: 700;
+    background: #16213e;
+    color: #fff;
+    position: sticky;
+    left: 0;
+    z-index: 1;
+}
+
+#fielding-grid tbody td.pos-col {
+    background: #16213e;
+    color: #fff;
+    font-weight: 600;
+}
+
+#fielding-grid tbody tr.bench-row td.pos-col {
+    color: #888;
+}
+
+#fielding-grid select {
+    width: 100%;
+    padding: 5px 4px;
+    border: 1px solid #2a2a4a;
+    border-radius: 3px;
+    background: transparent;
+    color: #e0e0e0;
+    font-size: 0.82rem;
+    cursor: pointer;
+    appearance: none;
+    text-align: center;
+    font-weight: 600;
+}
+
+#fielding-grid select:focus {
+    border-color: #c4393a;
+    outline: none;
+}
+
+#fielding-grid select option {
+    background: #1a1a2e;
+}
+
+/* Color code position rows */
+#fielding-grid tbody tr[data-pos="Pitcher"] td:first-child { border-left: 3px solid #e74c3c; }
+#fielding-grid tbody tr[data-pos="Catcher"] td:first-child { border-left: 3px solid #e67e22; }
+#fielding-grid tbody tr[data-pos="1st"] td:first-child { border-left: 3px solid #f1c40f; }
+#fielding-grid tbody tr[data-pos="2nd"] td:first-child { border-left: 3px solid #2ecc71; }
+#fielding-grid tbody tr[data-pos="3rd"] td:first-child { border-left: 3px solid #1abc9c; }
+#fielding-grid tbody tr[data-pos="SS"] td:first-child { border-left: 3px solid #3498db; }
+#fielding-grid tbody tr[data-pos="LF"] td:first-child { border-left: 3px solid #9b59b6; }
+#fielding-grid tbody tr[data-pos="CF"] td:first-child { border-left: 3px solid #8e44ad; }
+#fielding-grid tbody tr[data-pos="RF"] td:first-child { border-left: 3px solid #e91e8e; }
+
+/* Tracker */
+#tracker-wrap {
+    max-width: 400px;
+}
+
+#tracker-wrap h3 {
+    font-size: 1rem;
+    color: #c4393a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+}
+
+#tracker-table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#tracker-table th,
+#tracker-table td {
+    padding: 6px 12px;
+    border: 1px solid #2a2a4a;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+#tracker-table thead th {
+    background: #16213e;
+    color: #c4393a;
+    font-weight: 700;
+}
+
+#tracker-table td:first-child {
+    text-align: left;
+    font-weight: 600;
+    color: #fff;
+}
+
+#tracker-table .full-innings { color: #2ecc71; }
+#tracker-table .some-bench { color: #f1c40f; }
+#tracker-table .mostly-bench { color: #e74c3c; }
+
+/* Duplicate warning */
+.dup-warning {
+    background: #4a3a1a !important;
+    border-color: #f1c40f !important;
+}
+
+/* Upload bar */
+.upload-bar {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+}
+
+.upload-btn {
+    display: inline-block;
+    padding: 6px 14px;
+    background: #3a5eab;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.upload-btn:hover {
+    background: #4a6ebb;
+}
+
+.download-template-btn {
+    padding: 6px 14px;
+    background: #1a1a2e;
+    color: #aaa;
+    border: 1px solid #2a2a4a;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.82rem;
+}
+
+.download-template-btn:hover {
+    color: #fff;
+    border-color: #555;
+}
+
+.upload-status {
+    font-size: 0.8rem;
+    padding: 4px 8px;
+    border-radius: 3px;
+}
+
+.upload-status.success {
+    color: #2ecc71;
+}
+
+.upload-status.error {
+    color: #e74c3c;
+}
+
+/* Stats tables */
+.stats-table-wrap {
+    overflow-x: auto;
+}
+
+.stats-sub-tabs {
+    gap: 4px;
+}
+
+.stats-sub-tab, .season-sub-tab {
+    padding: 6px 16px;
+    font-size: 0.82rem;
+}
+
+#batting-stats-table,
+#fielding-stats-table,
+#pitching-stats-table,
+#season-innings-table,
+#season-batting-table,
+#season-fielding-table,
+#season-pitching-table,
+#season-lineup-table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 500px;
+}
+
+#batting-stats-table th, #batting-stats-table td,
+#fielding-stats-table th, #fielding-stats-table td,
+#pitching-stats-table th, #pitching-stats-table td,
+#season-innings-table th, #season-innings-table td,
+#season-batting-table th, #season-batting-table td,
+#season-fielding-table th, #season-fielding-table td,
+#season-pitching-table th, #season-pitching-table td,
+#season-lineup-table th, #season-lineup-table td {
+    padding: 6px 10px;
+    border: 1px solid #2a2a4a;
+    font-size: 0.82rem;
+    text-align: center;
+}
+
+#batting-stats-table thead th, #fielding-stats-table thead th, #pitching-stats-table thead th,
+#season-innings-table thead th, #season-batting-table thead th, #season-fielding-table thead th, #season-pitching-table thead th, #season-lineup-table thead th {
+    background: #16213e;
+    color: #c4393a;
+    font-weight: 700;
+}
+
+#batting-stats-table td:first-child, #fielding-stats-table td:first-child, #pitching-stats-table td:first-child,
+#season-innings-table td:first-child, #season-batting-table td:first-child, #season-fielding-table td:first-child, #season-pitching-table td:first-child, #season-lineup-table td:first-child {
+    text-align: left;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+}
+
+#batting-stats-table input, #fielding-stats-table input, #pitching-stats-table input {
+    width: 48px;
+    padding: 3px 4px;
+    border: 1px solid #2a2a4a;
+    border-radius: 3px;
+    background: #1a1a2e;
+    color: #e0e0e0;
+    font-size: 0.82rem;
+    text-align: center;
+}
+
+#batting-stats-table input:focus, #fielding-stats-table input:focus, #pitching-stats-table input:focus {
+    border-color: #c4393a;
+    outline: none;
+}
+
+#pitching-stats-table .player-select {
+    padding: 4px;
+    border: 1px solid #2a2a4a;
+    background: #1a1a2e;
+    color: #fff;
+    font-size: 0.82rem;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#add-pitcher-row {
+    margin-top: 8px;
+    padding: 6px 16px;
+    background: #2a6e4e;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+#add-pitcher-row:hover {
+    background: #35896a;
+}
+
+/* Season Tracker */
+#season-tracker {
+    position: absolute;
+    inset: 0;
+    background: #1e2a3a;
+    padding: 24px;
+    overflow: auto;
+    z-index: 10;
+}
+
+#season-tracker-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+#season-tracker-header h2 {
+    font-size: 1.3rem;
+    color: #fff;
+}
+
+#season-tracker-actions {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+#print-season-btn {
+    padding: 6px 14px;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    background: #2a6e4e;
+}
+
+#print-season-btn:hover { background: #35896a; }
+
+#close-season-tracker {
+    background: none;
+    border: 1px solid #2a2a4a;
+    color: #e0e0e0;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 4px;
+}
+
+/* Game Filter */
+#game-filter {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 16px;
+}
+
+#game-filter-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+}
+
+#game-filter-header span {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #c4393a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#game-filter-header button {
+    padding: 2px 10px;
+    background: none;
+    color: #aaa;
+    border: 1px solid #2a2a4a;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+
+#game-filter-header button:hover {
+    color: #fff;
+    border-color: #555;
+}
+
+/* Inline game filter (batting tab) */
+.inline-game-filter {
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 6px;
+    padding: 8px 14px;
+    margin-bottom: 12px;
+}
+
+.inline-filter-header {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 6px;
+}
+
+.inline-filter-header span {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #c4393a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.inline-filter-header button {
+    padding: 2px 10px;
+    background: none;
+    color: #aaa;
+    border: 1px solid #2a2a4a;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+
+.inline-filter-header button:hover {
+    color: #fff;
+    border-color: #555;
+}
+
+.inline-filter-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+}
+
+.inline-filter-list label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
+    color: #e0e0e0;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.inline-filter-list input[type="checkbox"] {
+    accent-color: #c4393a;
+    cursor: pointer;
+}
+
+#game-filter-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 14px;
+}
+
+#game-filter-list label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.82rem;
+    color: #e0e0e0;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+#game-filter-list input[type="checkbox"] {
+    accent-color: #c4393a;
+    cursor: pointer;
+}
+
+/* Lineup filters */
+#lineup-filters {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+/* Per-tab game filters */
+.tab-game-filter {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px;
+    background: #1a1a2e;
+    border: 1px solid #2a2a4a;
+    border-radius: 6px;
+    padding: 8px 14px;
+    margin-bottom: 12px;
+}
+
+.tab-game-filter span {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #c4393a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 4px;
+}
+
+.tab-filter-all, .tab-filter-none {
+    padding: 2px 10px;
+    background: none;
+    color: #aaa;
+    border: 1px solid #2a2a4a;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 0.75rem;
+}
+
+.tab-filter-all:hover, .tab-filter-none:hover {
+    color: #fff;
+    border-color: #555;
+}
+
+.tab-filter-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px 14px;
+    width: 100%;
+    margin-top: 4px;
+}
+
+.tab-filter-list label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 0.8rem;
+    color: #e0e0e0;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.tab-filter-list input[type="checkbox"] {
+    accent-color: #c4393a;
+    cursor: pointer;
+}
+
+#lineup-spot-filter,
+#lineup-player-filter {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+}
+
+#lineup-spot-filter span,
+#lineup-player-filter span {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: #c4393a;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-right: 4px;
+    min-width: 90px;
+}
+
+.player-filter-btn {
+    padding: 4px 12px;
+    background: #1a1a2e;
+    color: #aaa;
+    border: 1px solid #2a2a4a;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.player-filter-btn:hover {
+    color: #fff;
+    border-color: #555;
+}
+
+.player-filter-btn.active {
+    background: #3a5eab;
+    color: #fff;
+    border-color: #3a5eab;
+}
+
+.spot-filter-btn {
+    padding: 4px 12px;
+    background: #1a1a2e;
+    color: #aaa;
+    border: 1px solid #2a2a4a;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+.spot-filter-btn:hover {
+    color: #fff;
+    border-color: #555;
+}
+
+.spot-filter-btn.active {
+    background: #c4393a;
+    color: #fff;
+    border-color: #c4393a;
+}
+
+/* Lineup performance table */
+#season-lineup-table .lineup-spot-header td {
+    background: #16213e !important;
+    color: #c4393a !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border-top: 2px solid #c4393a;
+}
+
+/* Optimal lineup */
+#optimal-method-info {
+    background: #16213e;
+    border-left: 3px solid #3a5eab;
+    padding: 10px 14px;
+    margin-bottom: 14px;
+    font-size: 0.82rem;
+    color: #aaa;
+    line-height: 1.5;
+}
+
+#optimal-lineup-table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 500px;
+}
+
+#optimal-lineup-table th,
+#optimal-lineup-table td {
+    padding: 6px 10px;
+    border: 1px solid #2a2a4a;
+    font-size: 0.85rem;
+    text-align: center;
+}
+
+#optimal-lineup-table thead th {
+    background: #16213e;
+    color: #c4393a;
+    font-weight: 700;
+}
+
+#optimal-lineup-table td:first-child {
+    font-weight: 700;
+    color: #c4393a;
+    width: 30px;
+}
+
+#optimal-lineup-table td:nth-child(2) {
+    text-align: left;
+    font-weight: 600;
+    color: #fff;
+}
+
+#optimal-lineup-table td:nth-child(3) {
+    font-size: 0.75rem;
+    color: #aaa;
+    text-align: left;
+}
+
+#optimal-lineup-table .group-header td {
+    background: #16213e !important;
+    color: #c4393a !important;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.78rem;
+    border-top: 2px solid #c4393a;
+}
+
+#apply-optimal-btn {
+    margin-top: 12px;
+    padding: 8px 20px;
+    background: #2a6e4e;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+#apply-optimal-btn:hover {
+    background: #35896a;
+}
+
+#optimal-excerpt {
+    margin-top: 20px;
+    padding: 16px 20px;
+    background: #16213e;
+    border-left: 3px solid #3a5eab;
+    border-radius: 4px;
+    line-height: 1.65;
+}
+
+#optimal-excerpt h4 {
+    color: #fff;
+    font-size: 0.95rem;
+    margin-bottom: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+#optimal-excerpt p {
+    color: #bbb;
+    font-size: 0.82rem;
+    margin-bottom: 10px;
+}
+
+#optimal-excerpt p:last-child {
+    margin-bottom: 0;
+}
+
+#optimal-excerpt strong {
+    color: #e0e0e0;
+}
+
+/* Year comparison */
+#compare-tables .compare-year-header {
+    font-size: 1rem;
+    color: #c4393a;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin: 20px 0 8px;
+    padding: 6px 10px;
+    background: #16213e;
+    border-left: 3px solid #c4393a;
+}
+
+#compare-tables .compare-year-header:first-child {
+    margin-top: 0;
+}
+
+#compare-tables table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 500px;
+    margin-bottom: 4px;
+}
+
+#compare-tables th,
+#compare-tables td {
+    padding: 5px 8px;
+    border: 1px solid #2a2a4a;
+    font-size: 0.82rem;
+    text-align: center;
+}
+
+#compare-tables thead th {
+    background: #16213e;
+    color: #c4393a;
+    font-weight: 700;
+}
+
+#compare-tables td:first-child {
+    text-align: left;
+    font-weight: 600;
+    color: #fff;
+    white-space: nowrap;
+}
+
+#compare-tables .compare-improved {
+    color: #2ecc71;
+}
+
+#compare-tables .compare-declined {
+    color: #e74c3c;
+}
+
+/* Sortable headers — all season tables */
+#season-innings-table thead th,
+#season-batting-table thead th,
+#season-fielding-table thead th,
+#season-pitching-table thead th,
+#season-lineup-table thead th,
+#compare-tables thead th {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+#season-innings-table thead th:hover,
+#season-batting-table thead th:hover,
+#season-fielding-table thead th:hover,
+#season-pitching-table thead th:hover,
+#season-lineup-table thead th:hover,
+#compare-tables thead th:hover {
+    color: #fff;
+}
+
+thead th.sort-desc::after {
+    content: ' ▼';
+    font-size: 0.65rem;
+}
+
+thead th.sort-asc::after {
+    content: ' ▲';
+    font-size: 0.65rem;
+}
+
+.highlight-best {
+    background: #1a3a1a !important;
+    color: #8aff8a !important;
+}
+
+.highlight-worst {
+    background: #4a1a1a !important;
+    color: #ff8a8a !important;
+}
+
+.season-total-row td {
+    font-weight: 700 !important;
+    color: #c4393a !important;
+    border-top: 2px solid #c4393a !important;
+}
+
+.upload-btn-primary {
+    background: #c4393a !important;
+    font-size: 0.9rem !important;
+    padding: 8px 18px !important;
+}
+
+#clear-game-stats-btn {
+    padding: 6px 14px;
+    background: #4a1a1a;
+    color: #c4393a;
+    border: 1px solid #c4393a;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+#clear-game-stats-btn:hover {
+    background: #c4393a;
+    color: #fff;
+}
+
+/* Import Modal */
+#import-modal-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+#import-modal {
+    background: #16213e;
+    border: 1px solid #2a2a4a;
+    border-radius: 8px;
+    padding: 28px;
+    min-width: 440px;
+    max-width: 600px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.5);
+}
+
+#import-modal h3 {
+    color: #fff;
+    margin-bottom: 12px;
+    font-size: 1.1rem;
+}
+
+#import-team-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+#import-team-row label {
+    color: #aaa;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+#import-team-select {
+    flex: 1;
+    padding: 6px 10px;
+    background: #1a1a2e;
+    color: #fff;
+    border: 1px solid #3a5eab;
+    border-radius: 4px;
+    font-size: 0.85rem;
+}
+
+.import-hint {
+    color: #888;
+    font-size: 0.78rem;
+    margin-bottom: 10px;
+}
+
+#import-mapping-wrap {
+    overflow-y: auto;
+    max-height: 400px;
+    margin-bottom: 16px;
+}
+
+#import-mapping-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+#import-mapping-table th,
+#import-mapping-table td {
+    padding: 5px 8px;
+    border: 1px solid #2a2a4a;
+    font-size: 0.82rem;
+    text-align: left;
+}
+
+#import-mapping-table thead th {
+    background: #1a1a2e;
+    color: #c4393a;
+    font-weight: 700;
+    position: sticky;
+    top: 0;
+}
+
+#import-mapping-table td:nth-child(3) {
+    text-align: center;
+    color: #555;
+    width: 24px;
+}
+
+#import-mapping-table .mapping-select {
+    width: 100%;
+    padding: 4px 6px;
+    background: #1a1a2e;
+    color: #fff;
+    border: 1px solid #2a2a4a;
+    border-radius: 3px;
+    font-size: 0.82rem;
+}
+
+#import-mapping-table .mapping-select.auto-matched {
+    border-color: #2ecc71;
+}
+
+#import-mapping-table .pdf-name {
+    color: #e0e0e0;
+}
+
+#import-mapping-table .pdf-jersey {
+    color: #c4393a;
+    font-weight: 700;
+    text-align: center;
+}
+
+#import-modal-actions {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+}
+
+#import-confirm-btn {
+    padding: 8px 20px;
+    background: #2ecc71;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+#import-confirm-btn:hover { background: #27ae60; }
+
+#import-cancel-btn {
+    padding: 8px 16px;
+    background: none;
+    color: #aaa;
+    border: 1px solid #2a2a4a;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.82rem;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar { width: 8px; height: 8px; }
+::-webkit-scrollbar-track { background: #1a1a2e; }
+::-webkit-scrollbar-thumb { background: #2a2a4a; border-radius: 4px; }
+::-webkit-scrollbar-thumb:hover { background: #3a3a5a; }
+
+/* Print Styles */
+@media print {
+    body {
+        background: #fff !important;
+        color: #000 !important;
+        font-size: 11pt;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+    }
+
+    header {
+        background: #fff !important;
+        border-bottom: 2px solid #000;
+        padding: 8px 16px;
+    }
+
+    header h1 { color: #000 !important; font-size: 14pt; }
+
+    body.print-season header {
+        border-bottom: 3px solid #000;
+        padding: 10px 16px;
+        text-align: center;
+    }
+
+    body.print-season header h1 {
+        font-size: 18pt !important;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+    }
+    #header-actions { display: none !important; }
+    #game-list { display: none !important; }
+    #import-modal-overlay { display: none !important; }
+
+    main { height: auto; }
+
+    #lineup-editor {
+        padding: 12px;
+        overflow: visible;
+    }
+
+    /* --- Game print mode (default) --- */
+    body:not(.print-season) #season-tracker { display: none !important; }
+    body:not(.print-season) #editor-title { color: #000 !important; font-size: 13pt; }
+    body:not(.print-season) #delete-game-btn { display: none !important; }
+    body:not(.print-season) #copy-game-wrap { display: none !important; }
+    body:not(.print-season) .upload-bar { display: none !important; }
+    body:not(.print-season) .tabs { display: none !important; }
+    body:not(.print-season) #batting-tab,
+    body:not(.print-season) #fielding-tab { display: block !important; }
+    body:not(.print-season) #stats-tab { display: none !important; }
+
+    /* --- Season print mode --- */
+    body.print-season #editor-content { display: none !important; }
+    body.print-season #no-game-selected { display: none !important; }
+    body.print-season #season-tracker {
+        display: block !important;
+        position: static !important;
+        padding: 0 !important;
+        background: #fff !important;
+    }
+    body.print-season #season-tracker-header {
+        text-align: center;
+        margin-bottom: 4px;
+    }
+    body.print-season #season-tracker-header h2 {
+        color: #000 !important;
+        font-size: 16pt;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        margin-bottom: 2px;
+    }
+    body.print-season #season-tracker-actions { display: none !important; }
+    body.print-season #game-filter { display: none !important; }
+    body.print-season .stats-sub-tabs { display: none !important; }
+    body.print-season #lineup-filters { display: none !important; }
+
+    /* Show all season tabs when printing */
+    body.print-season .season-tab-content {
+        display: block !important;
+        page-break-before: auto;
+        page-break-inside: avoid;
+        break-inside: avoid;
+        margin-bottom: 0;
+        padding-bottom: 10px;
+        background: #fff !important;
+    }
+
+    body.print-season .stats-table-wrap {
+        background: #fff !important;
+    }
+
+    /* Force page break between sections if needed */
+    body.print-season #season-batting-tab,
+    body.print-season #season-fielding-tab,
+    body.print-season #season-pitching-tab,
+    body.print-season #season-lineup-tab {
+        page-break-before: auto;
+        break-before: auto;
+    }
+
+    /* Never break inside a table */
+    body.print-season table {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    /* Never break a row from its header */
+    body.print-season tbody tr {
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    /* Keep lineup spot headers with their data */
+    body.print-season .lineup-spot-header {
+        page-break-after: avoid;
+        break-after: avoid;
+    }
+
+    /* Section headers */
+    body.print-season .season-tab-content::before {
+        display: block;
+        font-size: 11pt;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin: 14px 0 4px;
+        padding: 4px 8px;
+        background: #222 !important;
+        color: #fff !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    body.print-season #season-innings-tab::before { content: "Innings & Positions"; }
+    body.print-season #season-batting-tab::before { content: "Batting Totals"; }
+    body.print-season #season-fielding-tab::before { content: "Fielding Totals"; }
+    body.print-season #season-pitching-tab::before { content: "Pitching Totals"; }
+    body.print-season #season-lineup-tab::before { content: "Lineup Performance"; }
+    body.print-season #season-optimal-tab::before { content: "Optimal Lineup"; }
+
+    body.print-season #season-optimal-tab {
+        page-break-before: always;
+        page-break-inside: avoid;
+        break-before: always;
+        break-inside: avoid;
+    }
+
+    body.print-season #optimal-lineup-table th,
+    body.print-season #optimal-lineup-table td {
+        padding: 2px 3px !important;
+        font-size: 7pt !important;
+    }
+
+    body.print-season #optimal-method-info {
+        padding: 4px 8px !important;
+        font-size: 6.5pt !important;
+        line-height: 1.3 !important;
+        margin-bottom: 6px !important;
+    }
+
+    body.print-season #optimal-method-info p {
+        margin-bottom: 2px !important;
+        margin-top: 0 !important;
+    }
+
+    body.print-season #optimal-excerpt {
+        padding: 6px 10px !important;
+        margin-top: 6px !important;
+    }
+
+    body.print-season #optimal-excerpt h4 {
+        font-size: 7.5pt !important;
+        margin-bottom: 4px !important;
+    }
+
+    body.print-season #optimal-excerpt p {
+        font-size: 6.5pt !important;
+        margin-bottom: 4px !important;
+        line-height: 1.3 !important;
+    }
+
+    body.print-season .group-header td {
+        padding: 2px 4px !important;
+        font-size: 7pt !important;
+    }
+    body.print-season #season-compare-tab::before { content: "Year Comparison"; }
+
+    body.print-season #season-compare-tab {
+        page-break-before: always;
+        page-break-inside: avoid;
+        break-before: always;
+        break-inside: avoid;
+    }
+
+    body.print-season #season-compare-tab table {
+        font-size: 7pt !important;
+        page-break-inside: avoid;
+        break-inside: avoid;
+    }
+
+    body.print-season #season-compare-tab th,
+    body.print-season #season-compare-tab td {
+        padding: 2px 4px !important;
+        font-size: 7pt !important;
+    }
+
+    body.print-season .compare-year-header {
+        font-size: 8pt !important;
+        padding: 3px 6px !important;
+        margin: 6px 0 2px !important;
+    }
+
+    body.print-season #optimal-method-info {
+        background: #f0f0f0 !important;
+        color: #333 !important;
+        border-left: 3px solid #000 !important;
+    }
+
+    body.print-season #apply-optimal-btn { display: none !important; }
+
+    body.print-season #optimal-excerpt {
+        background: #f5f5f5 !important;
+        border-left: 3px solid #000 !important;
+        padding: 10px 14px !important;
+        margin-top: 12px !important;
+    }
+
+    body.print-season #optimal-excerpt h4 {
+        color: #000 !important;
+        font-size: 9pt !important;
+    }
+
+    body.print-season #optimal-excerpt p {
+        color: #333 !important;
+        font-size: 8pt !important;
+    }
+
+    body.print-season #optimal-excerpt strong {
+        color: #000 !important;
+    }
+
+    body.print-season .group-header td {
+        background: #e0e0e0 !important;
+        color: #000 !important;
+        border-top: 2px solid #000 !important;
+    }
+
+    body.print-season .compare-year-header {
+        background: #e8e8e8 !important;
+        color: #000 !important;
+        font-weight: 700 !important;
+        border-left: 3px solid #000 !important;
+    }
+
+    /* Table styling for season print */
+    body.print-season table {
+        width: 100% !important;
+        border-collapse: collapse !important;
+        min-width: unset !important;
+        margin-bottom: 0 !important;
+    }
+
+    body.print-season th,
+    body.print-season td {
+        padding: 3px 5px !important;
+        font-size: 8pt !important;
+        border: 1px solid #bbb !important;
+    }
+
+    body.print-season thead th {
+        background: #e8e8e8 !important;
+        font-weight: 700 !important;
+        font-size: 7pt !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.3px;
+        border-bottom: 2px solid #000 !important;
+    }
+
+    body.print-season td:first-child {
+        font-weight: 600 !important;
+        white-space: nowrap !important;
+    }
+
+    /* Alternating row shading */
+    body.print-season tbody tr:nth-child(even) td {
+        background: #f5f5f5 !important;
+    }
+
+    /* Totals row */
+    body.print-season .season-total-row td {
+        border-top: 2px solid #000 !important;
+        font-weight: 700 !important;
+        background: #e8e8e8 !important;
+    }
+
+    /* Lineup spot group headers */
+    body.print-season .lineup-spot-header td {
+        background: #d0d0d0 !important;
+        color: #000 !important;
+        font-weight: 700 !important;
+        font-size: 8pt !important;
+        text-transform: uppercase !important;
+        letter-spacing: 0.5px;
+        border-top: 2px solid #000 !important;
+    }
+
+    /* Highlight best/worst carry through to print */
+    body.print-season .highlight-best {
+        background: #c8f7c8 !important;
+        font-weight: 700 !important;
+    }
+    body.print-season .highlight-worst {
+        background: #f7c8c8 !important;
+    }
+
+    /* Hide sort arrows in print */
+    body.print-season thead th::after {
+        display: none !important;
+    }
+
+    #batting-tab::before {
+        content: "Batting Order";
+        display: block;
+        font-size: 12pt;
+        font-weight: 700;
+        margin-bottom: 6px;
+        border-bottom: 1px solid #000;
+        padding-bottom: 4px;
+    }
+
+    #fielding-tab::before {
+        content: "Fielding Positions";
+        display: block;
+        font-size: 12pt;
+        font-weight: 700;
+        margin: 12px 0 6px;
+        border-bottom: 1px solid #000;
+        padding-bottom: 4px;
+    }
+
+    #tracker-wrap::before {
+        content: "";
+    }
+
+    #tracker-wrap h3 { color: #000 !important; }
+
+    #add-batting-row { display: none !important; }
+    .inline-game-filter { display: none !important; }
+    .tab-game-filter { display: none !important; }
+
+    table {
+        border-collapse: collapse !important;
+        width: 100% !important;
+        min-width: unset !important;
+    }
+
+    th, td {
+        border: 1px solid #999 !important;
+        padding: 4px 6px !important;
+        font-size: 9pt !important;
+    }
+
+    td:not([data-player-color]),
+    td[data-player-color=""] {
+        color: #000 !important;
+    }
+
+    /* Default white background for cells without player colors */
+    td:not([data-player-color]),
+    td[data-player-color=""] {
+        background: #fff !important;
+    }
+
+    th {
+        background: #fff !important;
+    }
+
+    thead th {
+        background: #e8e8e8 !important;
+        font-weight: 700 !important;
+    }
+
+    /* Selects in print */
+    select {
+        appearance: none !important;
+        border: none !important;
+        background: transparent !important;
+        font-size: 9pt !important;
+        padding: 0 !important;
+        font-weight: 700 !important;
+    }
+
+    /* Default black text for selects on white cells */
+    td:not([data-player-color]) select,
+    td[data-player-color=""] select {
+        color: #000 !important;
+    }
+
+    /* Colored cells: inherit the td's inline color (white or black set by JS) */
+    td[data-player-color]:not([data-player-color=""]) select {
+        color: inherit !important;
+    }
+
+    /* Batting grid: compact for print */
+    #batting-grid {
+        width: auto !important;
+    }
+
+    #batting-grid .order-num {
+        width: 20px !important;
+        min-width: 20px !important;
+        padding: 2px 4px !important;
+    }
+
+    #batting-grid .pos-col,
+    #batting-grid tbody td.pos-col {
+        width: auto !important;
+        min-width: unset !important;
+        padding: 3px 8px !important;
+        white-space: nowrap !important;
+    }
+
+    #batting-grid .stat-col {
+        width: 36px !important;
+        min-width: 36px !important;
+        padding: 2px 4px !important;
+        font-family: monospace !important;
+        font-size: 8pt !important;
+    }
+
+    #batting-grid .stat-low {
+        background: #ffcccc !important;
+        color: #900 !important;
+    }
+
+    #batting-grid .stat-high {
+        background: #ccffcc !important;
+        color: #060 !important;
+    }
+
+    #batting-grid .stat-top30 {
+        background: #ccffcc !important;
+        color: #060 !important;
+    }
+
+    /* Hide remove button column in batting */
+    .remove-batter { display: none !important; }
+    #batting-grid tbody td:last-child {
+        display: none !important;
+    }
+}

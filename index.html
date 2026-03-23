@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Baseball Lineup Manager</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Baseball Lineup Manager</h1>
+        <div id="header-actions">
+            <button id="season-tracker-btn">Season Tracker</button>
+            <button id="print-btn">Print / Download Lineup</button>
+        </div>
+    </header>
+
+    <main>
+        <!-- Game List Sidebar -->
+        <aside id="game-list">
+            <h2>Games</h2>
+            <form id="add-game-form">
+                <input type="date" id="game-date" required>
+                <input type="text" id="game-opponent" placeholder="Opponent" required>
+                <select id="game-innings">
+                    <option value="3">3 innings</option>
+                    <option value="4">4 innings</option>
+                    <option value="5" selected>5 innings</option>
+                    <option value="6">6 innings</option>
+                    <option value="7">7 innings</option>
+                </select>
+                <button type="submit">Add Game</button>
+            </form>
+            <ul id="games"></ul>
+            <div id="import-season-section">
+                <h2>Import Season</h2>
+                <input type="text" id="import-season-label" placeholder="Label (e.g. 2025 Season)" value="2025 Season">
+                <label class="upload-btn" style="display:block;text-align:center;margin-top:6px;">
+                    Upload Season CSV
+                    <input type="file" id="upload-season-csv" accept=".csv" hidden>
+                </label>
+                <span id="season-csv-status"></span>
+            </div>
+            <div id="data-sync-section">
+                <h2>Data Sync</h2>
+                <button id="export-data-btn">Export Data</button>
+                <label class="upload-btn" style="display:block;text-align:center;margin-top:6px;">
+                    Import Data
+                    <input type="file" id="import-data-file" accept=".json" hidden>
+                </label>
+                <span id="sync-status"></span>
+            </div>
+            <div id="roster-section">
+                <h2>Roster</h2>
+                <form id="add-player-form">
+                    <input type="text" id="player-name" placeholder="Player name" required>
+                    <button type="submit">+ Add</button>
+                </form>
+                <ul id="roster-list"></ul>
+            </div>
+        </aside>
+
+        <!-- Lineup Editor -->
+        <section id="lineup-editor">
+            <div id="no-game-selected">
+                <p>Select a game or add a new one to build your lineup.</p>
+            </div>
+
+            <div id="editor-content" class="hidden">
+                <div id="game-header">
+                    <h2 id="editor-title"></h2>
+                    <div id="game-header-actions">
+                        <div id="copy-game-wrap">
+                            <button id="copy-game-btn">Copy From...</button>
+                            <div id="copy-game-dropdown" class="hidden">
+                                <ul id="copy-game-list"></ul>
+                            </div>
+                        </div>
+                        <button id="delete-game-btn" title="Delete game">Delete Game</button>
+                    </div>
+                </div>
+
+                <div class="tabs" id="main-tabs">
+                    <button class="tab active" data-tab="batting">Batting Order</button>
+                    <button class="tab" data-tab="fielding">Fielding Positions</button>
+                    <button class="tab" data-tab="stats">Game Stats</button>
+                </div>
+
+                <!-- Batting Order: simple ordered list -->
+                <div id="batting-tab" class="tab-content active">
+                    <div id="batting-game-filter" class="inline-game-filter">
+                        <div class="inline-filter-header">
+                            <span>Filter Games:</span>
+                            <button class="filter-all-btn">All</button>
+                            <button class="filter-none-btn">None</button>
+                        </div>
+                        <div class="inline-filter-list"></div>
+                    </div>
+                    <div id="batting-grid-wrap">
+                        <table id="batting-grid">
+                            <thead>
+                                <tr id="batting-header-row">
+                                    <th class="order-num">#</th>
+                                    <th class="pos-col">Player</th>
+                                    <th class="stat-col" title="Last 5 Plate Appearances BA">L5</th>
+                                    <th class="stat-col">AVG</th>
+                                    <th class="stat-col">OBP</th>
+                                    <th class="stat-col">SLG</th>
+                                    <th class="spacer-col"></th>
+                                    <th class="stat-col" title="Plate Appearances per Game">PA/G</th>
+                                    <th class="stat-col" title="At Bats per Game">AB/G</th>
+                                    <th class="stat-col" title="Hits per Game">H/G</th>
+                                    <th class="stat-col" title="Walks per Game">BB/G</th>
+                                    <th class="spacer-col"></th>
+                                    <th class="stat-col" title="RBI per Game">RBI/G</th>
+                                    <th class="stat-col" title="Singles per Game">1B/G</th>
+                                    <th class="stat-col" title="Doubles per Game">2B/G</th>
+                                    <th class="stat-col" title="Triples per Game">3B/G</th>
+                                    <th class="stat-col" title="Home Runs per Game">HR/G</th>
+                                    <th class="stat-col" title="Stolen Bases per Game">SB/G</th>
+                                </tr>
+                            </thead>
+                            <tbody id="batting-body"></tbody>
+                        </table>
+                        <button id="add-batting-row" title="Add batter">+ Add Batter</button>
+                    </div>
+                </div>
+
+                <!-- Fielding Grid -->
+                <div id="fielding-tab" class="tab-content">
+                    <div id="fielding-grid-wrap">
+                        <table id="fielding-grid">
+                            <thead>
+                                <tr id="inning-header-row">
+                                    <th class="pos-col">Position</th>
+                                </tr>
+                            </thead>
+                            <tbody id="fielding-body"></tbody>
+                        </table>
+                    </div>
+                    <div id="tracker-wrap">
+                        <h3>Innings Played</h3>
+                        <table id="tracker-table">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>In</th>
+                                    <th>Out</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tracker-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Game Stats -->
+                <div id="stats-tab" class="tab-content">
+                    <div class="upload-bar" id="pdf-upload-bar">
+                        <label class="upload-btn upload-btn-primary">
+                            Upload Game PDF (GameChanger)
+                            <input type="file" id="upload-game-pdf" accept=".pdf" hidden>
+                        </label>
+                        <button id="clear-game-stats-btn">Clear All Stats</button>
+                        <span id="pdf-upload-status"></span>
+                    </div>
+
+                    <div class="stats-sub-tabs">
+                        <button class="stats-sub-tab active" data-statstab="batting-stats">Batting</button>
+                        <button class="stats-sub-tab" data-statstab="fielding-stats">Fielding</button>
+                        <button class="stats-sub-tab" data-statstab="pitching-stats">Pitching</button>
+                    </div>
+
+                    <div id="batting-stats-tab" class="stats-tab-content active">
+                        <div class="upload-bar">
+                            <label class="upload-btn">
+                                Upload Stats (CSV or PDF)
+                                <input type="file" id="upload-batting-csv" accept=".csv,.pdf" hidden>
+                            </label>
+                            <button class="download-template-btn" data-type="batting">Download CSV Template</button>
+                        </div>
+                        <div class="stats-table-wrap">
+                            <table id="batting-stats-table">
+                                <thead>
+                                    <tr>
+                                        <th>Player</th>
+                                        <th title="At Bats">AB</th>
+                                        <th title="Runs">R</th>
+                                        <th title="Hits">H</th>
+                                        <th title="Doubles">2B</th>
+                                        <th title="Triples">3B</th>
+                                        <th title="Home Runs">HR</th>
+                                        <th title="Runs Batted In">RBI</th>
+                                        <th title="Walks">BB</th>
+                                        <th title="Strikeouts">K</th>
+                                        <th title="Hit By Pitch">HBP</th>
+                                        <th title="Sacrifice">SAC</th>
+                                        <th title="Stolen Bases">SB</th>
+                                        <th title="Reached on Error">ROE</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="batting-stats-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="fielding-stats-tab" class="stats-tab-content">
+                        <div class="upload-bar">
+                            <label class="upload-btn">
+                                Upload Stats (CSV or PDF)
+                                <input type="file" id="upload-fielding-csv" accept=".csv,.pdf" hidden>
+                            </label>
+                            <button class="download-template-btn" data-type="fielding">Download CSV Template</button>
+                        </div>
+                        <div class="stats-table-wrap">
+                            <table id="fielding-stats-table">
+                                <thead>
+                                    <tr>
+                                        <th>Player</th>
+                                        <th title="Putouts">PO</th>
+                                        <th title="Assists">A</th>
+                                        <th title="Errors">E</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="fielding-stats-body"></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div id="pitching-stats-tab" class="stats-tab-content">
+                        <div class="upload-bar">
+                            <label class="upload-btn">
+                                Upload Stats (CSV or PDF)
+                                <input type="file" id="upload-pitching-csv" accept=".csv,.pdf" hidden>
+                            </label>
+                            <button class="download-template-btn" data-type="pitching">Download CSV Template</button>
+                        </div>
+                        <div class="stats-table-wrap">
+                            <table id="pitching-stats-table">
+                                <thead>
+                                    <tr>
+                                        <th>Player</th>
+                                        <th title="Innings Pitched">IP</th>
+                                        <th title="Hits Allowed">H</th>
+                                        <th title="Runs">R</th>
+                                        <th title="Earned Runs">ER</th>
+                                        <th title="Walks">BB</th>
+                                        <th title="Strikeouts">K</th>
+                                        <th title="Hit Batters">HB</th>
+                                        <th title="Pitches">PC</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="pitching-stats-body"></tbody>
+                            </table>
+                            <button id="add-pitcher-row">+ Add Pitcher</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Season Tracker Overlay -->
+            <div id="season-tracker" class="hidden">
+                <div id="season-tracker-header">
+                    <h2>Season Tracker</h2>
+                    <div id="season-tracker-actions">
+                        <button id="print-season-btn">Print / Download PDF</button>
+                        <button id="close-season-tracker">&times;</button>
+                    </div>
+                </div>
+
+                <div class="stats-sub-tabs">
+                    <button class="season-sub-tab active" data-seasontab="season-innings">Innings &amp; Positions</button>
+                    <button class="season-sub-tab" data-seasontab="season-batting">Batting Totals</button>
+                    <button class="season-sub-tab" data-seasontab="season-fielding">Fielding Totals</button>
+                    <button class="season-sub-tab" data-seasontab="season-pitching">Pitching Totals</button>
+                    <button class="season-sub-tab" data-seasontab="season-lineup">Lineup Performance</button>
+                    <button class="season-sub-tab" data-seasontab="season-compare">Year Comparison</button>
+                    <button class="season-sub-tab" data-seasontab="season-optimal">Optimal Lineup</button>
+                </div>
+
+                <div id="season-innings-tab" class="season-tab-content active">
+                    <div class="tab-game-filter" data-filter="innings">
+                        <span>Filter Games:</span>
+                        <button class="tab-filter-all">All</button>
+                        <button class="tab-filter-none">None</button>
+                        <div class="tab-filter-list"></div>
+                    </div>
+                    <div class="stats-table-wrap">
+                        <table id="season-innings-table">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>P</th>
+                                    <th>C</th>
+                                    <th>1B</th>
+                                    <th>2B</th>
+                                    <th>3B</th>
+                                    <th>SS</th>
+                                    <th>LF</th>
+                                    <th>CF</th>
+                                    <th>RF</th>
+                                    <th>Bench</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="season-innings-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="season-batting-tab" class="season-tab-content">
+                    <div class="tab-game-filter" data-filter="batting-totals">
+                        <span>Filter Games:</span>
+                        <button class="tab-filter-all">All</button>
+                        <button class="tab-filter-none">None</button>
+                        <div class="tab-filter-list"></div>
+                    </div>
+                    <div class="stats-table-wrap">
+                        <table id="season-batting-table">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>G</th>
+                                    <th>PA</th>
+                                    <th>AB</th>
+                                    <th>AVG</th>
+                                    <th>OBP</th>
+                                    <th>OPS</th>
+                                    <th>SLG</th>
+                                    <th>H</th>
+                                    <th>1B</th>
+                                    <th>2B</th>
+                                    <th>3B</th>
+                                    <th>HR</th>
+                                    <th>RBI</th>
+                                    <th>R</th>
+                                    <th>BB</th>
+                                    <th>SO</th>
+                                    <th>HBP</th>
+                                    <th>ROE</th>
+                                    <th>SB</th>
+                                </tr>
+                            </thead>
+                            <tbody id="season-batting-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="season-fielding-tab" class="season-tab-content">
+                    <div class="tab-game-filter" data-filter="fielding">
+                        <span>Filter Games:</span>
+                        <button class="tab-filter-all">All</button>
+                        <button class="tab-filter-none">None</button>
+                        <div class="tab-filter-list"></div>
+                    </div>
+                    <div class="stats-table-wrap">
+                        <table id="season-fielding-table">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>G</th>
+                                    <th>PO</th>
+                                    <th>A</th>
+                                    <th>E</th>
+                                    <th>FLD%</th>
+                                </tr>
+                            </thead>
+                            <tbody id="season-fielding-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="season-pitching-tab" class="season-tab-content">
+                    <div class="tab-game-filter" data-filter="pitching">
+                        <span>Filter Games:</span>
+                        <button class="tab-filter-all">All</button>
+                        <button class="tab-filter-none">None</button>
+                        <div class="tab-filter-list"></div>
+                    </div>
+                    <div class="stats-table-wrap">
+                        <table id="season-pitching-table">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>G</th>
+                                    <th>IP</th>
+                                    <th>H</th>
+                                    <th>R</th>
+                                    <th>ER</th>
+                                    <th>BB</th>
+                                    <th>K</th>
+                                    <th>HB</th>
+                                    <th>PC</th>
+                                    <th>ERA</th>
+                                </tr>
+                            </thead>
+                            <tbody id="season-pitching-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="season-lineup-tab" class="season-tab-content">
+                    <div class="tab-game-filter" data-filter="lineup">
+                        <span>Filter Games:</span>
+                        <button class="tab-filter-all">All</button>
+                        <button class="tab-filter-none">None</button>
+                        <div class="tab-filter-list"></div>
+                    </div>
+                    <div id="lineup-filters">
+                        <div id="lineup-spot-filter">
+                            <span>Filter Spot:</span>
+                            <button class="spot-filter-btn active" data-spot="all">All</button>
+                        </div>
+                        <div id="lineup-player-filter">
+                            <span>Filter Player:</span>
+                            <button class="player-filter-btn active" data-player="all">All</button>
+                        </div>
+                    </div>
+                    <div class="stats-table-wrap">
+                        <table id="season-lineup-table">
+                            <thead>
+                                <tr>
+                                    <th>Player</th>
+                                    <th>Spot</th>
+                                    <th>G</th>
+                                    <th>PA</th>
+                                    <th>AB</th>
+                                    <th>AVG</th>
+                                    <th>OBP</th>
+                                    <th>OPS</th>
+                                    <th>SLG</th>
+                                    <th>H</th>
+                                    <th>1B</th>
+                                    <th>2B</th>
+                                    <th>3B</th>
+                                    <th>HR</th>
+                                    <th>RBI</th>
+                                    <th>R</th>
+                                    <th>BB</th>
+                                    <th>SO</th>
+                                    <th>HBP</th>
+                                    <th>ROE</th>
+                                    <th>SB</th>
+                                </tr>
+                            </thead>
+                            <tbody id="season-lineup-body"></tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div id="season-optimal-tab" class="season-tab-content">
+                    <div class="tab-game-filter" data-filter="optimal">
+                        <span>Filter Games:</span>
+                        <button class="tab-filter-all">All</button>
+                        <button class="tab-filter-none">None</button>
+                        <div class="tab-filter-list"></div>
+                    </div>
+                    <div id="optimal-lineup-wrap">
+                        <div id="optimal-method-info">
+                            <p><strong>Modern Sabermetrics Model (2025)</strong> — This lineup is built to maximize run production by placing the highest-value hitters where they get the most plate appearances with runners on base, using wOBA (the gold standard metric that weights every offensive outcome by its actual run value) rather than traditional batting average. The order is specifically designed for 10U continuous batting — elite hitters are staggered across groups of three so every inning has a scoring threat, preventing the "dead spots" that kill rallies in youth baseball. The model continuously updates after every game, dynamically blending 2025 and 2026 performance data so the lineup evolves with each player's development — the more 2026 games played, the more the model trusts current form over last season's baseline.</p>
+                            <p style="margin-top:6px;font-size:0.78rem;color:#666;">Dynamic year weighting (Marcel method) auto-adjusts per player based on 2026 games played. Scoring: wOBA 35%, Contact 25%, Speed 20%, ISO 20%. Weight column shows 2025%/2026% blend.</p>
+                        </div>
+                        <table id="optimal-lineup-table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Player</th>
+                                    <th>Role</th>
+                                    <th>OBP</th>
+                                    <th>SLG</th>
+                                    <th>OPS</th>
+                                    <th>AVG</th>
+                                    <th>BB/G</th>
+                                    <th>K/G</th>
+                                    <th>SB/G</th>
+                                    <th title="Runs per Game">R/G</th>
+                                    <th title="(wOBA × 0.35) + (Contact% × 0.25) + (Speed × 0.20) + (ISO × 0.20)">Score</th>
+                                    <th title="Year weighting (2025/2026)">Weight</th>
+                                </tr>
+                            </thead>
+                            <tbody id="optimal-lineup-body"></tbody>
+                        </table>
+                        <button id="apply-optimal-btn">Apply to Current Game</button>
+
+                        <div id="optimal-excerpt">
+                            <h4>The Science Behind the Lineup</h4>
+                            <p>For over a century, baseball lineups were built on tradition — your fastest guy leads off, your best hitter bats third, your weakest hitter bats ninth. Modern sabermetrics has proven this approach leaves runs on the table. By analyzing millions of plate appearances through weighted on-base average (wOBA), isolated power (ISO), and Markov chain run expectancy models, researchers like Tom Tango demonstrated that the <strong>#2 spot — not #3 — is the most valuable position in the lineup</strong>, because it combines high plate appearance frequency with the highest probability of batting with runners on base.</p>
+                            <p>This lineup is engineered to maximize expected runs per game. Every player is evaluated not by traditional batting average, but by <strong>wOBA — the single best predictor of offensive run production</strong>, which weights each outcome (walk, single, double, triple, home run) by its actual contribution to scoring runs. We then layer in contact rate (avoiding strikeouts that kill rallies), speed (creating baserunning pressure and extra bases), and isolated power (the ability to drive in runs with extra-base hits). The result is a batting order where every spot in the lineup is optimized to create the highest possible run expectancy — turning data into runs, and runs into wins.</p>
+                            <p>For youth baseball with continuous batting orders, we apply the <strong>"Groups of Three" staggering method</strong> backed by Markov chain analysis of run-limited games. Rather than clustering all the best hitters at the top and leaving dead spots at the bottom, elite hitters are distributed across the lineup so every inning has a scoring threat. Each group contains a table-setter (high OBP to get on base), a contact hitter (to advance runners), and a run producer (power to drive them in) — replicating the optimal scoring sequence throughout the entire order.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="season-compare-tab" class="season-tab-content">
+                    <div class="tab-game-filter" data-filter="compare">
+                        <span>Filter Games:</span>
+                        <button class="tab-filter-all">All</button>
+                        <button class="tab-filter-none">None</button>
+                        <div class="tab-filter-list"></div>
+                    </div>
+                    <div id="compare-tables"></div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Import Modal -->
+    <div id="import-modal-overlay" class="hidden">
+        <div id="import-modal">
+            <h3>Import Game Stats</h3>
+            <div id="import-team-row">
+                <label>Your Team:</label>
+                <select id="import-team-select"></select>
+            </div>
+            <p class="import-hint">Match each PDF player to your roster. New players will be added automatically.</p>
+            <div id="import-mapping-wrap">
+                <table id="import-mapping-table">
+                    <thead>
+                        <tr>
+                            <th>PDF Player</th>
+                            <th>#</th>
+                            <th></th>
+                            <th>Roster Name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="import-mapping-body"></tbody>
+                </table>
+            </div>
+            <div id="import-modal-actions">
+                <button id="import-confirm-btn">Import Stats</button>
+                <button id="import-cancel-btn">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+    <script>
+        if (window.pdfjsLib) {
+            pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        }
+    </script>
+    <script src="app.js"></script>
+</body>
+</html>
