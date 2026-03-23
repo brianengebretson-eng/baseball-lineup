@@ -1571,6 +1571,249 @@ thead th.sort-asc::after {
 ::-webkit-scrollbar-thumb:hover { background: #3a3a5a; }
 
 /* Print Styles */
+/* ========== MOBILE RESPONSIVE ========== */
+@media screen and (max-width: 900px) {
+    /* Stack layout vertically */
+    main {
+        flex-direction: column;
+        height: auto;
+    }
+
+    /* Sidebar becomes top bar */
+    #game-list {
+        width: 100%;
+        min-width: unset;
+        max-height: none;
+        border-right: none;
+        border-bottom: 1px solid #2a2a4a;
+        padding: 12px;
+    }
+
+    /* Collapse sidebar sections */
+    #roster-section,
+    #import-season-section,
+    #data-sync-section {
+        display: none;
+    }
+
+    /* Show toggle to expand sidebar sections */
+    #game-list.expanded #roster-section,
+    #game-list.expanded #import-season-section,
+    #game-list.expanded #data-sync-section {
+        display: block;
+    }
+
+    #games {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        margin-bottom: 10px;
+    }
+
+    #games li {
+        padding: 6px 10px;
+        font-size: 0.78rem;
+    }
+
+    /* Header */
+    header {
+        flex-wrap: wrap;
+        padding: 10px 12px;
+        gap: 8px;
+    }
+
+    header h1 {
+        font-size: 1.1rem;
+        width: 100%;
+    }
+
+    #header-actions {
+        width: 100%;
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+
+    #header-actions button {
+        font-size: 0.75rem;
+        padding: 5px 10px;
+    }
+
+    /* Editor */
+    #lineup-editor {
+        padding: 12px;
+    }
+
+    #game-header {
+        flex-wrap: wrap;
+        gap: 8px;
+    }
+
+    #editor-title {
+        font-size: 1rem;
+        width: 100%;
+    }
+
+    /* Tabs */
+    .tabs, .stats-sub-tabs {
+        flex-wrap: wrap;
+        gap: 3px;
+    }
+
+    .tab, .stats-sub-tab, .season-sub-tab {
+        padding: 6px 10px;
+        font-size: 0.75rem;
+    }
+
+    /* Tables — horizontal scroll */
+    #batting-grid-wrap,
+    #fielding-grid-wrap,
+    .stats-table-wrap {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    /* Batting grid compact */
+    #batting-grid th,
+    #batting-grid td {
+        padding: 4px 5px;
+        font-size: 0.75rem;
+    }
+
+    #batting-grid .pos-col {
+        min-width: 100px;
+        width: auto;
+    }
+
+    #batting-grid .stat-col {
+        min-width: 35px;
+        width: 35px;
+        font-size: 0.7rem;
+    }
+
+    #batting-grid .spacer-col {
+        width: 4px !important;
+        min-width: 4px !important;
+        max-width: 4px !important;
+    }
+
+    /* Fielding grid compact */
+    #fielding-grid th,
+    #fielding-grid td {
+        padding: 4px 5px;
+        font-size: 0.75rem;
+    }
+
+    /* Stats tables compact */
+    #batting-stats-table th, #batting-stats-table td,
+    #fielding-stats-table th, #fielding-stats-table td,
+    #pitching-stats-table th, #pitching-stats-table td {
+        padding: 4px 5px;
+        font-size: 0.75rem;
+    }
+
+    #batting-stats-table input,
+    #fielding-stats-table input,
+    #pitching-stats-table input {
+        width: 38px;
+        font-size: 0.75rem;
+    }
+
+    /* Filter compact */
+    .inline-game-filter,
+    .tab-game-filter {
+        padding: 6px 10px;
+    }
+
+    .inline-filter-list label,
+    .tab-filter-list label {
+        font-size: 0.72rem;
+    }
+
+    /* Season tracker */
+    #season-tracker {
+        padding: 12px;
+    }
+
+    #season-tracker-header h2 {
+        font-size: 1.1rem;
+    }
+
+    /* Optimal lineup */
+    #optimal-method-info {
+        font-size: 0.72rem;
+        padding: 8px 10px;
+    }
+
+    #optimal-excerpt p {
+        font-size: 0.72rem;
+    }
+
+    /* Lineup filters */
+    #lineup-filters {
+        gap: 6px;
+    }
+
+    .spot-filter-btn,
+    .player-filter-btn {
+        padding: 3px 8px;
+        font-size: 0.72rem;
+    }
+
+    /* Copy game dropdown */
+    #copy-game-dropdown {
+        right: auto;
+        left: 0;
+    }
+
+    /* Upload bar */
+    .upload-bar {
+        flex-wrap: wrap;
+    }
+
+    .upload-btn {
+        font-size: 0.75rem;
+        padding: 5px 10px;
+    }
+
+    /* Import modal */
+    #import-modal {
+        min-width: unset;
+        width: 95vw;
+        max-height: 90vh;
+        padding: 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    header h1 {
+        font-size: 0.95rem;
+    }
+
+    .tab, .stats-sub-tab, .season-sub-tab {
+        padding: 5px 8px;
+        font-size: 0.7rem;
+    }
+
+    #editor-title {
+        font-size: 0.9rem;
+    }
+
+    #batting-grid .stat-col {
+        min-width: 30px;
+        width: 30px;
+        font-size: 0.65rem;
+    }
+
+    #batting-grid .pos-col {
+        min-width: 80px;
+    }
+
+    #batting-grid .order-num {
+        width: 20px;
+        min-width: 20px;
+    }
+}
+
 @media print {
     body {
         background: #fff !important;

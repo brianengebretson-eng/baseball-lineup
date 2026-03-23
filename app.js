@@ -3464,5 +3464,23 @@ document.getElementById('import-data-file').addEventListener('change', function(
     reader.readAsText(file);
 });
 
+// --- Mobile toggle ---
+const mobileMoreBtn = document.getElementById('mobile-more-btn');
+function checkMobile() {
+    if (window.innerWidth <= 900) {
+        mobileMoreBtn.style.display = 'block';
+    } else {
+        mobileMoreBtn.style.display = 'none';
+        document.getElementById('game-list').classList.remove('expanded');
+    }
+}
+mobileMoreBtn.addEventListener('click', () => {
+    const sidebar = document.getElementById('game-list');
+    sidebar.classList.toggle('expanded');
+    mobileMoreBtn.textContent = sidebar.classList.contains('expanded') ? 'Less Options ▲' : 'More Options ▼';
+});
+window.addEventListener('resize', checkMobile);
+checkMobile();
+
 renderRoster();
 renderGames();
