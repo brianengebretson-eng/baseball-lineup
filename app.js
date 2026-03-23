@@ -9,12 +9,45 @@ function loadData() {
     return JSON.parse(localStorage.getItem('baseballLineup') || '{"roster":[],"games":[],"nameMap":{}}');
 }
 
+// Save to localStorage AND Firebase
+let _saveTimeout = null;
 function saveData(d) {
     localStorage.setItem('baseballLineup', JSON.stringify(d));
+    // Debounce Firebase writes (wait 500ms after last change)
+    if (_saveTimeout) clearTimeout(_saveTimeout);
+    _saveTimeout = setTimeout(() => {
+        if (window.firebaseDB) {
+            window.firebaseDB.ref('lineupData').set(d).catch(err => {
+                console.warn('Firebase save failed:', err.message);
+            });
+        }
+    }, 500);
 }
 
 let data = loadData();
 let activeGameId = null;
+
+// On startup, try to load from Firebase (cloud data wins if newer)
+if (window.firebaseDB) {
+    window.firebaseDB.ref('lineupData').once('value').then(snapshot => {
+        const cloudData = snapshot.val();
+        if (cloudData && cloudData.games && cloudData.games.length > 0) {
+            const localGames = data.games ? data.games.length : 0;
+            const cloudGames = cloudData.games.length;
+            // Use cloud data if it has more games or local is empty
+            if (cloudGames >= localGames || localGames === 0) {
+                data = cloudData;
+                if (!data.nameMap) data.nameMap = {};
+                localStorage.setItem('baseballLineup', JSON.stringify(data));
+                renderRoster();
+                renderGames();
+                console.log('Loaded data from Firebase (' + cloudGames + ' games)');
+            }
+        }
+    }).catch(err => {
+        console.warn('Firebase load failed:', err.message);
+    });
+}
 
 // --- Tab switching ---
 function setupTabs(selector, contentClass, prefix) {

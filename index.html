@@ -533,6 +533,21 @@
         </div>
     </div>
 
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-database-compat.js"></script>
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyCbEkJEf01_p6AzU7sb5DgESDtBtvu2n3Y",
+            authDomain: "baseball-lineup-8f183.firebaseapp.com",
+            databaseURL: "https://baseball-lineup-8f183-default-rtdb.firebaseio.com",
+            projectId: "baseball-lineup-8f183",
+            storageBucket: "baseball-lineup-8f183.firebasestorage.app",
+            messagingSenderId: "34056590054",
+            appId: "1:34056590054:web:c804dea85c4e5155022127"
+        };
+        firebase.initializeApp(firebaseConfig);
+        window.firebaseDB = firebase.database();
+    </script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
